@@ -34,6 +34,7 @@ try{var saved=localStorage.getItem('netops_theme');var shouldBeDark=saved!=='lig
   --font-mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
   --term-bg:#0A0C10;--term-text:#E9EEF6;--term-prompt:#4DFF88;--term-error:#FF3DDC;--term-info:#00E5FF;--term-warn:#FFB84D;
   --glow-accent:0 0 12px rgba(0,102,136,.2);--glow-success:0 0 12px rgba(0,122,61,.2);--glow-danger:0 0 12px rgba(184,0,122,.2);
+  --header-h:112px;
 }
 html.dark{
   --bg:#0A0C10;--bg-muted:#05070A;--surface:#12151C;--surface-2:#171C25;
@@ -65,8 +66,8 @@ input,textarea,select{font:inherit;color:inherit}
 html.dark .skip-link{color:#0A0C10}
 .skip-link:focus{top:16px}
 
-.header{position:sticky;top:0;z-index:30;background:rgba(232,236,242,.95);border-bottom:1px solid var(--border);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-html.dark .header{background:rgba(10,12,16,.95)}
+.header{position:sticky;top:0;z-index:60;background:rgba(232,236,242,.97);border-bottom:1px solid var(--border);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+html.dark .header{background:rgba(10,12,16,.97)}
 .header-inner{max-width:1280px;margin:0 auto;padding:8px 12px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
 @media(min-width:640px){.header-inner{height:64px;padding:0 24px;flex-wrap:nowrap}}
 @media(min-width:1024px){.header-inner{padding:0 32px}}
@@ -108,31 +109,31 @@ html:not(.dark) .search-input:focus{box-shadow:0 0 0 3px rgba(0,102,136,.22)}
 .icon-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
 html.dark .icon-btn.active{color:#0A0C10;box-shadow:var(--glow-accent)}
 
-.page{max-width:1280px;margin:0 auto;padding:16px 12px;display:flex;flex-direction:column;gap:24px;position:relative;min-height:calc(100vh - 64px)}
+.page{max-width:1280px;margin:0 auto;padding:16px 12px;display:flex;flex-direction:column;gap:24px;position:relative;min-height:calc(100vh - var(--header-h))}
 @media(min-width:640px){.page{padding:24px;gap:32px}}
-@media(min-width:1024px){.page{flex-direction:row;padding:24px 32px;gap:32px}}
+@media(min-width:1024px){.page{flex-direction:row;align-items:flex-start;padding:24px 32px;gap:32px}}
 
-.sidebar{position:fixed;top:0;left:0;bottom:0;z-index:50;width:280px;max-width:85vw;background:var(--surface);border-right:1px solid var(--border);padding:20px;padding-top:max(20px,env(safe-area-inset-top));padding-bottom:max(20px,env(safe-area-inset-bottom));overflow-y:auto;transform:translateX(-100%);transition:transform .25s cubic-bezier(.4,0,.2,1);will-change:transform;-webkit-overflow-scrolling:touch}
+.sidebar{position:fixed;top:var(--header-h);left:0;bottom:0;z-index:55;width:280px;max-width:85vw;background:var(--surface);border-right:1px solid var(--border);padding:20px;padding-bottom:max(20px,env(safe-area-inset-bottom));overflow-y:auto;transform:translateX(-100%);transition:transform .25s cubic-bezier(.4,0,.2,1);will-change:transform;-webkit-overflow-scrolling:touch;box-shadow:var(--shadow-lg)}
 .sidebar[data-open="true"]{transform:translateX(0)}
-@media(min-width:1024px){.sidebar{position:sticky;top:88px;transform:none;width:240px;flex-shrink:0;height:calc(100vh - 88px);background:transparent;border-right:none;padding:0;transition:none;will-change:auto}}
+@media(min-width:1024px){.sidebar{position:sticky;top:calc(var(--header-h) + 16px);z-index:10;transform:none;width:240px;flex-shrink:0;max-height:calc(100vh - var(--header-h) - 32px);background:transparent;border-right:none;padding:0 6px 16px 0;transition:none;will-change:auto;box-shadow:none}}
 .sidebar-header{display:flex;align-items:center;justify-content:space-between;padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid var(--border)}
 @media(min-width:1024px){.sidebar-header{display:none}}
 .sidebar-title{font-size:.95rem;font-weight:700;color:var(--accent)}
 .sidebar-close{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:var(--radius);color:var(--text-muted);font-size:1.1rem}
 .sidebar-close:hover{background:var(--bg-muted);color:var(--text)}
 .nav-label{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text-subtle);padding:0 12px;margin-bottom:8px;margin-top:16px}
+.nav-label:first-of-type{margin-top:0}
 .nav{display:flex;flex-direction:column;gap:2px}
 .nav-link{display:flex;align-items:center;gap:10px;padding:9px 12px;font-size:.83rem;font-weight:500;color:var(--text);border-radius:var(--radius);text-decoration:none;transition:background-color .15s,color .15s,border-color .15s;border-left:2px solid transparent}
 .nav-link:hover{background:var(--bg-muted);color:var(--accent);text-decoration:none}
 .nav-link.active{background:var(--accent-bg);color:var(--accent-text);font-weight:600;border-left-color:var(--accent)}
 html.dark .nav-link.active{box-shadow:inset 2px 0 0 var(--accent)}
 .nav-icon{flex-shrink:0;width:20px;text-align:center;font-size:1rem;color:var(--accent)}
-.backdrop{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.7);opacity:0;pointer-events:none;transition:opacity .2s}
+.backdrop{position:fixed;top:var(--header-h);left:0;right:0;bottom:0;z-index:50;background:rgba(0,0,0,.65);opacity:0;pointer-events:none;transition:opacity .2s}
 .backdrop[data-open="true"]{opacity:1;pointer-events:auto}
 @media(min-width:1024px){.backdrop{display:none}}
 .main{flex:1;min-width:0;display:flex;flex-direction:column;gap:40px}
-.section{display:flex;flex-direction:column;gap:20px;scroll-margin-top:100px}
-@media(min-width:640px){.section{scroll-margin-top:88px}}
+.section{display:flex;flex-direction:column;gap:20px;scroll-margin-top:calc(var(--header-h) + 16px)}
 .section-header{border-bottom:1px solid var(--border);padding-bottom:16px}
 .section-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:8px}
 .badge{display:inline-block;padding:2px 10px;font-size:.7rem;font-weight:600;border-radius:var(--radius-full);font-family:var(--font-mono);letter-spacing:.02em;border:1px solid transparent}
@@ -1615,6 +1616,22 @@ html.dark .presentation-nav button{color:#0A0C10}
 function debounce(fn,ms){var t;return function(){var c=this,a=arguments;clearTimeout(t);t=setTimeout(function(){fn.apply(c,a)},ms)}}
 function escapeRegex(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}
 
+/* Medição dinâmica da altura do Header para evitar sobreposição do Sidebar e Scroll */
+(function(){
+  var header=document.querySelector('.header');
+  if(!header)return;
+  function syncHeaderHeight(){
+    var h=header.offsetHeight;
+    if(h>0)document.documentElement.style.setProperty('--header-h',h+'px');
+  }
+  syncHeaderHeight();
+  window.addEventListener('resize',debounce(syncHeaderHeight,60));
+  if(window.ResizeObserver){
+    var ro=new ResizeObserver(syncHeaderHeight);
+    ro.observe(header);
+  }
+})();
+
 /* Base de Conhecimento Unificada (Catálogo + Inspetor ~ + Autocomplete) */
 window.NETOPS_COMMANDS = [
   {cmd:'enable',mode:'>',cat:'IOS',desc:'Eleva o privilégio do modo User EXEC (>) para Privileged EXEC (#).',real:'Desbloqueia comandos de visualização avançada (show running-config), depuração e acesso à configuração global.',ex:'enable'},
@@ -1622,7 +1639,7 @@ window.NETOPS_COMMANDS = [
   {cmd:'configure terminal',mode:'#',cat:'IOS',desc:'Entra no modo de Configuração Global (config)#.',real:'Permite alterar parâmetros que afetam o roteador ou switch inteiro (nome, senhas, protocolos de roteamento).',ex:'configure terminal'},
   {cmd:'hostname',mode:'(config)#',cat:'IOS',desc:'Define o nome de identificação do equipamento na rede.',real:'Altera o prompt do terminal (ex: de Router# para Floor14#) e identifica o dispositivo em protocolos como CDP/LLDP e SSH.',ex:'hostname Floor14'},
   {cmd:'enable secret',mode:'(config)#',cat:'IOS',desc:'Define a senha de acesso ao modo privilegiado usando hash criptográfico.',real:'Protege o modo enable contra acesso não autorizado gravando um hash irreversível (MD5/SHA256) na configuração.',ex:'enable secret class'},
-  {cmd:'service password-encryption',mode:'(config)#',cat:'IOS',desc:'Ofusca todas as senhas em texto claro na configuração (Tipo 7).',real:'Evita que alguém olhando por cima do ombro (shoulder surfing) leia senhas de console ou VTY no show running-config.',ex:'service password-encryption'},
+  {cmd:'service password-encryption',mode:'(config)#',cat:'IOS',desc:'Ofusca todas as senhas em texto claro na configuração (Tipo 7).',real:'Evita que alguém olhando por cima dobro (shoulder surfing) leia senhas de console ou VTY no show running-config.',ex:'service password-encryption'},
   {cmd:'banner motd',mode:'(config)#',cat:'IOS',desc:'Exibe uma mensagem de aviso legal antes do login.',real:'Informa usuários sobre políticas de segurança e monitoramento (essencial para validade jurídica em auditorias).',ex:'banner motd # Acesso restrito #'},
   {cmd:'line con 0',mode:'(config)#',cat:'IOS',desc:'Acessa a configuração da porta física Console.',real:'Permite exigir senha e configurar timeout para quem conecta o cabo console diretamente no equipamento.',ex:'line con 0'},
   {cmd:'line vty 0 4',mode:'(config)#',cat:'IOS',desc:'Acessa as linhas virtuais de acesso remoto (SSH/Telnet).',real:'Controla quem e como administradores podem acessar o equipamento pela rede (sessões 0 a 4 simultâneas).',ex:'line vty 0 4'},
@@ -1703,20 +1720,18 @@ window.NETOPS_COMMANDS = [
   var savedScroll=0;
   function openMenu(){
     savedScroll=window.pageYOffset||document.documentElement.scrollTop||0;
-    document.body.style.position='fixed';document.body.style.top='-'+savedScroll+'px';
-    document.body.style.left='0';document.body.style.right='0';document.body.style.width='100%';
+    document.body.style.overflow='hidden';
     sidebar.setAttribute('data-open','true');backdrop.setAttribute('data-open','true');openBtn.setAttribute('aria-expanded','true');
     setTimeout(function(){closeBtn.focus()},120);
   }
   function closeMenu(){
-    document.body.style.position='';document.body.style.top='';document.body.style.left='';document.body.style.right='';document.body.style.width='';
-    window.scrollTo(0,savedScroll);
+    document.body.style.overflow='';
     sidebar.setAttribute('data-open','false');backdrop.setAttribute('data-open','false');openBtn.setAttribute('aria-expanded','false');
     openBtn.focus();
   }
   window.__closeMenu=closeMenu;
   window.__isMenuOpen=function(){return sidebar.getAttribute('data-open')==='true'};
-  openBtn.addEventListener('click',openMenu);
+  openBtn.addEventListener('click',function(){if(window.__isMenuOpen())closeMenu();else openMenu()});
   closeBtn.addEventListener('click',closeMenu);
   backdrop.addEventListener('click',closeMenu);
   document.addEventListener('keydown',function(e){
